@@ -28,11 +28,10 @@ const AngryEmoji = [
 ];
 
 export const HelloCommand: Command = {
-  shouldHandle: (message, { tag, command, args }) =>
+  shouldHandle: (message, { command }) =>
     Keywords.includes(command),
 
-  handle: (message: Message) => {
-    const command = message.content.split(' ')[1];
+  handle: async (message: Message, { command }) => {
     const chance = random();
 
     if(chance < .05) {

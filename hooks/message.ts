@@ -1,13 +1,16 @@
 import * as Discord from 'discord.js';
-import { Client, Message, Permissions, TextChannel } from 'discord.js';
+import { Client, Message, Permissions, TextChannel, VoiceChannel } from 'discord.js';
 import ENV from 'squidly/env';
 import { moveChannels } from 'squidly/actions/move-channels';
 import { EMBED_COLORS } from 'squidly/constants/colors';
 import { HelloCommand } from 'squidly/commands';
 import { buildQueryFromNameOrID, getChannel } from 'squidly/utils/discord';
+import { CommandMetadata } from 'squidly/types';
+import { BanRoulette } from 'squidly/commands/banroulette';
 
 export async function handle(client: Client, message: Message) {
   const [tag, command, ...args] = message?.content?.split(' ') || [];
+  const commandMetadata: CommandMetadata = { tag, command, args };
   const guildID = message.guild?.id;
 
   try {
@@ -32,8 +35,8 @@ export async function handle(client: Client, message: Message) {
 
     // Example of contained commands
     // This one just pings back when it sees "hello"
-    } else if(HelloCommand.shouldHandle(message, { tag, command, args })) {
-      HelloCommand.handle(message);
+    } else if(HelloCommand.shouldHandle(message, commandMetadata)) {
+      HelloCommand.handle(message, commandMetadata);
 
     // Examples of inline commands
     // Move a channel from it's current category to the "ARCHIVED" channel category
@@ -85,6 +88,10 @@ export async function handle(client: Client, message: Message) {
         ;
         message.channel.send(embed);
       }
+
+    // Move a channel to the "GAME CHANNELS" category (presumably from out of archive)
+    } else if(BanRoulette.shouldHandle(message, commandMetadata)) {
+      BanRoulette.handle(message, commandMetadata);
 
     // Unrecognized command
     } else {
