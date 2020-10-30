@@ -1,0 +1,8 @@
+node_modules/
+.c9
+.DS_STORE
+*.iml
+.idea/
+env/*.ts
+!env/example.ts
+!env/index.ts

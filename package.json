@@ -1,0 +1,24 @@
+{
+    "name": "testbot",
+    "version": "0.1.0",
+    "scripts": {
+        "start": "ts-node -r tsconfig-paths/register index.ts",
+        "local": "ts-node-dev -r tsconfig-paths/register index.ts"
+    },
+    "engines": {
+        "node": "14.0.x"
+    },
+    "dependencies": {
+        "discord.js": "^12.2.0",
+        "node-cron": "^2.0.3",
+        "node-fetch": "^2.6.0",
+        "seedrandom": "^3.0.5",
+        "ts-node": "^8.10.1",
+        "tsconfig-paths": "^3.9.0",
+        "typescript": "^3.8.3"
+    },
+    "devDependencies": {
+        "ts-node-dev": "^1.0.0-pre.44",
+        "tslint": "^6.1.2"
+    }
+}
