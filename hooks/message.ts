@@ -7,6 +7,7 @@ import { HelloCommand } from 'squidly/commands';
 import { buildQueryFromNameOrID, getChannel } from 'squidly/utils/discord';
 import { CommandMetadata } from 'squidly/types';
 import { BanRoulette } from 'squidly/commands/banroulette';
+import { MostSquotable } from 'squidly/commands/most-squotable';
 
 export async function handle(client: Client, message: Message) {
   const [tag, command, ...args] = message?.content?.split(' ') || [];
@@ -92,6 +93,10 @@ export async function handle(client: Client, message: Message) {
     // Move a channel to the "GAME CHANNELS" category (presumably from out of archive)
     } else if(BanRoulette.shouldHandle(message, commandMetadata)) {
       BanRoulette.handle(message, commandMetadata);
+
+    // Figure out the member who is squoted the most
+    } else if(MostSquotable.shouldHandle(message, commandMetadata)) {
+      MostSquotable.handle(message, commandMetadata);
 
     // Unrecognized command
     } else {

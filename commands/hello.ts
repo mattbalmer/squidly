@@ -39,7 +39,7 @@ export const HelloCommand: Command = {
       message.channel.send(`Oh ... hey <@${message.author.id}> ${emoji}`);
     } else {
       const emoji = randomElement(HappyEmoji);
-      message.channel.send(`${capitalize(command[0])}, <@${message.author.id}>! ${emoji}`);
+      message.channel.send(`${capitalize(command)}, <@${message.author.id}>! ${emoji}`);
     }
   },
 };
