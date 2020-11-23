@@ -5,7 +5,6 @@ import { Command } from 'squidly/types';
 import { mostFrequentElements, randomElement } from 'squidly/utils/arrays';
 import { EMBED_COLORS } from 'squidly/constants/colors';
 import { allSettled } from 'squidly/utils/promises';
-import { handle } from 'squidly/hooks/message';
 
 const Keywords = [
   'squotable',
@@ -31,6 +30,7 @@ async function fetchAllMessages(channel: Discord.TextChannel) {
     });
     allMessages = allMessages.concat(fetchedMessages.array());
   }
+  console.log(fetchedMessages)
   return allMessages;
 };
 
@@ -44,8 +44,6 @@ const handlePlural = (memberNames: string[]) => {
   }
 };
 
-// TODO: incorporate squoteCount
-// TODO: more plural botReplies
 export const MostSquotable: Command = {
   shouldHandle: (message, { command }) =>
     Keywords.includes(command),
@@ -80,16 +78,25 @@ export const MostSquotable: Command = {
       const squoteCount = mostSquotedMembers[0].count;
 
       const botReplies = [
+        `Looks as though people think ${handlePlural(memberNames)} are the funniest members of ${serverName}! Try harder, everyone else!`,
+        `Would you look at that? The squotiest members of ${serverName} are apparently ${handlePlural(memberNames)}!`,
+        `What a day it is to be ${handlePlural(memberNames)}, the funniest members of ${serverName}!`,
         `Pack your bags, fuckers -- ${handlePlural(memberNames)} are funnier than you!`,
+        `If I had two cents for every time ${handlePlural(memberNames)} were the funniest members of ${serverName}, I'd have the sense to give up!`,
+        `What's that? It's the sound of ${handlePlural(memberNames)} being more squotable than you!`,
+        `Looks like ${handlePlural(memberNames)} have the most squotes! They deserve a raise, but I pay them nothing!`,
+        `"Knock knock! "Hello?" "It's us, ${handlePlural(memberNames)}, the most squoted people in ${serverName}!"`,
+        `""A facility for quotation covers the absence of original thought." -- Dorothy Sayers" --${handlePlural(memberNames)}`,
+        `Really, everyone? ${handlePlural(memberNames)} are the funniest ones here? Seriously?`,
       ];
 
       message.channel.send(new Discord.MessageEmbed()
-          .setColor(EMBED_COLORS.SUCCESS)
-          .setDescription(randomElement(botReplies))
-          .addFields([{
-            name: 'Squotes: ',
-            value: `${squoteCount}`
-          }])
+        .setColor(EMBED_COLORS.SUCCESS)
+        .setDescription(randomElement(botReplies))
+        .addFields([{
+          name: 'Squotes: ',
+          value: `${squoteCount}`
+        }])
       );
     } else if (mostSquotedMembers.length === 1) {
       const mostSquotedMember = mostSquotedMembers[0];
@@ -108,15 +115,20 @@ export const MostSquotable: Command = {
         `""A facility for quotation covers the absence of original thought." -- Dorothy Sayers" --${memberName}`,
         `Really, everyone? ${memberName} is the funniest one here? Seriously?`,
       ];
-  
-      // a bot reply that responds with something different in the event of a tie
-  
+
       message.channel.send(new Discord.MessageEmbed()
-          .setColor(EMBED_COLORS.SUCCESS)
-          .setDescription(randomElement(botReplies))
+        .setColor(EMBED_COLORS.SUCCESS)
+        .setDescription(randomElement(botReplies))
+        .addFields([{
+          name: 'Squotes: ',
+          value: `${squoteCount}`
+        }])
       );
     } else {
-      // TODO: handle null case
+      message.channel.send(new Discord.MessageEmbed()
+        .setColor(EMBED_COLORS.SUCCESS)
+        .setDescription("What the hell happened here?")
+      );
     }
   },
 };
