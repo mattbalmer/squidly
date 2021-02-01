@@ -32,8 +32,6 @@ export function mostFrequentElements<T = any>(array: T[], getKey: (element: T, i
       mostFrequentCount = tallies[key].count;
     }
   }
-
-  console.log(tallies)
   
   return mostFrequentElements;
 };

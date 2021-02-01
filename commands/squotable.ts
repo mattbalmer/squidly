@@ -13,7 +13,6 @@ const Keywords = [
   'squoteist',
   'quotable',
   'quoteable',
-  'most',
 ];
 
 async function fetchAllMessages(channel: Discord.TextChannel) {
@@ -30,7 +29,6 @@ async function fetchAllMessages(channel: Discord.TextChannel) {
     });
     allMessages = allMessages.concat(fetchedMessages.array());
   }
-  console.log(fetchedMessages)
   return allMessages;
 };
 
