@@ -11,6 +11,7 @@ export type Env = {
   },
   GAME_CHANNEL_NAME: string,
   ARCHIVE_CHANNEL_NAME: string,
+  QUOTES_CHANNEL_NAME: string,
 }
 
 export type CommandMetadata = {

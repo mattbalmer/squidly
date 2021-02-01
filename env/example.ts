@@ -30,6 +30,8 @@ const EXAMPLE_CONFIG: Env = {
   GAME_CHANNEL_NAME: 'game channels',
 
   ARCHIVE_CHANNEL_NAME: 'archived',
+
+  QUOTES_CHANNEL_NAME: 'quotes',
 };
 
 export default EXAMPLE_CONFIG;
